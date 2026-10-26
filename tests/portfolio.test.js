@@ -7,6 +7,7 @@ import { profile } from "../src/data/profile.js";
 import { createMacbook, disposeMacbook } from "../src/lib/macbook.js";
 import { publicRepositories } from "../scripts/sync-github.mjs";
 import { fitDistance } from "../src/lib/camera.js";
+import { keyboardKeys, keyboardWidth, keyboardDepth, keyboardCenterZ } from "../src/lib/keyboard.js";
 
 const snapshot = JSON.parse(
   readFileSync(new URL("../src/data/github.json", import.meta.url), "utf8"),
@@ -122,6 +123,36 @@ test("Original Air model has a clickable 16:10 screen and a separate hinge", () 
         [...object.geometry.attributes.position.array].every(Number.isFinite),
       );
   });
+  disposeMacbook(laptop);
+});
+
+test("Air keyboard has 78 US keys with labels centered on their keycaps", () => {
+  const { laptop } = createMacbook();
+  const keys = laptop.children.filter((child) => child.name.startsWith("key:"));
+  assert.equal(keys.length, 78);
+  assert.equal(keyboardKeys.filter(({ label }) => label === "return").length, 1);
+  assert.equal(keyboardKeys.filter(({ label }) => /^[A-Z]$/.test(label)).length, 26);
+  assert.equal(keyboardKeys.filter(({ label }) => label === "command").length, 2);
+  assert.equal(keyboardKeys.filter(({ label }) => label === "option").length, 2);
+  for (const key of keyboardKeys) {
+    const mesh = keys.find((child) => child.name === `key:${key.label}` && child.position.x === key.x);
+    assert.ok(mesh);
+    assert.equal(mesh.position.z, key.z);
+    assert.ok(Math.abs(key.x) + key.width / 2 <= keyboardWidth / 2 + 1e-10);
+    assert.ok(Math.abs(key.z - keyboardCenterZ) + key.depth / 2 <= keyboardDepth / 2);
+    for (const other of keyboardKeys) {
+      if (key === other) continue;
+      assert.ok(
+        Math.abs(key.x - other.x) >= (key.width + other.width) / 2 - 1e-10 ||
+        Math.abs(key.z - other.z) >= (key.depth + other.depth) / 2 - 1e-10,
+        `${key.label} overlaps ${other.label}`,
+      );
+    }
+  }
+  const up = keyboardKeys.find(({ label }) => label === "up");
+  const down = keyboardKeys.find(({ label }) => label === "down");
+  assert.equal(up.x, down.x);
+  assert.ok(up.z < down.z);
   disposeMacbook(laptop);
 });
 

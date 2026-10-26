@@ -8,12 +8,19 @@ export const profile = {
   avatar: "https://avatars.githubusercontent.com/u/195607975?v=4",
   intro:
     "I turn curiosity into useful software, drawing inspiration from code and everyday life. My projects explore AI conversations, desktop tools, and data research.",
-  // Add verified honors only: { year, title, issuer, description, url }.
   honors: [],
 };
 
-// Summaries follow public READMEs and retain the status of unfinished research.
 export const projectDetails = {
+  "ho2006-portfolio": {
+    category: "Web Apps",
+    title: "MacBook Air Portfolio",
+    description:
+      "An interactive React and Three.js portfolio inside a classic monochrome Mac desktop, with a 3D MacBook Air and a mobile layout.",
+    tags: ["React", "Three.js", "Vite"],
+    demo: "https://ho2006-portfolio.vercel.app/",
+    art: "chat",
+  },
   IncentiveScope: {
     category: "Data Research",
     title: "IncentiveScope",
@@ -35,13 +42,14 @@ export const projectDetails = {
     art: "pet",
     featured: true,
   },
-  "zxf-ai-chat": {
+  carsonbench: {
     category: "Web Apps",
-    title: "Zhang Xuefeng AI Chat",
-    subtitle: "Exploring conversational experiences",
+    title: "CarsonBench",
+    subtitle: "Human and AI reading experiments",
     description:
-      "A TypeScript chat website featuring an AI persona of Zhang Xuefeng, exploring natural conversational interfaces.",
-    tags: ["TypeScript", "AI", "Web"],
+      "A React and Electron reading experiment comparing human and DeepSeek responses to Silent Spring, with a fixed reading pack, manual scoring, and reproducible experiment records.",
+    tags: ["React", "Electron", "DeepSeek"],
+    demo: "https://carsonbench.vercel.app/",
     art: "chat",
     featured: true,
   },

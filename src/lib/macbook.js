@@ -1,5 +1,6 @@
 import * as THREE from "three";
 import { RoundedBoxGeometry } from "three/addons/geometries/RoundedBoxGeometry.js";
+import { keyboardKeys, keyboardWidth, keyboardDepth, keyboardCenterZ } from "./keyboard.js";
 
 export function createMacbook(keyboardTexture) {
   const laptop = new THREE.Group();
@@ -40,29 +41,29 @@ export function createMacbook(keyboardTexture) {
   base.geometry.computeVertexNormals();
   box(laptop, 5.75, 0.024, 1.92, hinge, 0, 0.127, -0.61, 0.09);
 
-  // The keyboard shares geometry and materials to keep the model light.
-  const keyGeometry = new RoundedBoxGeometry(0.355, 0.045, 0.265, 1, 0.025);
-  for (let row = 0; row < 5; row++) {
-    for (let column = 0; column < 14; column++) {
-      const key = new THREE.Mesh(keyGeometry, dark);
-      key.position.set((column - 6.5) * 0.396, 0.162, -1.32 + row * 0.317);
-      laptop.add(key);
-    }
+  const keyGeometries = new Map();
+  for (const { label, x, z, width, depth } of keyboardKeys) {
+    const shape = `${width}:${depth}`;
+    if (!keyGeometries.has(shape))
+      keyGeometries.set(shape, new RoundedBoxGeometry(width, 0.045, depth, 1, 0.02));
+    const key = new THREE.Mesh(keyGeometries.get(shape), dark);
+    key.name = `key:${label}`;
+    key.position.set(x, 0.162, z);
+    laptop.add(key);
   }
-  box(laptop, 2.5, 0.045, 0.26, dark, 0, 0.162, 0.265, 0.024);
-  for (const x of [-2.6, -2.12, -1.62, 1.62, 2.12, 2.6])
-    box(laptop, 0.41, 0.045, 0.26, dark, x, 0.162, 0.265, 0.025);
   if (keyboardTexture) {
     const labels = new THREE.Mesh(
-      new THREE.PlaneGeometry(5.55, 1.57),
+      new THREE.PlaneGeometry(keyboardWidth, keyboardDepth),
       new THREE.MeshBasicMaterial({
         map: keyboardTexture,
         transparent: true,
         depthWrite: false,
+        toneMapped: false,
       }),
     );
     labels.rotation.x = -Math.PI / 2;
-    labels.position.set(0, 0.189, -0.68);
+    labels.name = "keyboard-labels";
+    labels.position.set(0, 0.189, keyboardCenterZ);
     laptop.add(labels);
   }
   box(laptop, 1.88, 0.013, 1.14, hinge, 0, 0.111, 1.22, 0.055);

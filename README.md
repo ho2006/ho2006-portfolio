@@ -31,7 +31,7 @@ npm run preview
 
 - `src/data/profile.js`: name, biography, school, public email, and English project summaries.
 - `profile.honors`: verified honors as `{ year, title, issuer, description, url }`. Currently empty because no awards have been supplied.
-- `src/data/github.json`: public original repository snapshot fetched on 2026-10-12. Private, forked, archived, and empty repositories are excluded.
+- `src/data/github.json`: 11 public original repositories, refreshed on 2026-10-26. Private, forked, archived, and empty repositories are excluded.
 
 Refresh public data with:
 
@@ -66,6 +66,6 @@ CSS3DRenderer assumes 100% browser zoom. Additional projection calibration for o
 
 ## Validation
 
-Five Node.js tests cover public repository filtering, English display content, search, sync validation, model structure, and camera framing in landscape and portrait. The production build passes.
+Six Node.js tests cover public repository filtering, English display content, search, sync validation, model structure, the shared 78-key US keyboard layout, and camera framing in landscape and portrait. The production build passes.
 
 Physical mobile devices still need testing. Three.js is loaded separately on demand, around 135 KB compressed; its uncompressed chunk exceeds Vite's default 500 KB warning threshold.
