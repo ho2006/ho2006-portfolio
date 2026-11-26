@@ -30,7 +30,7 @@ npm run preview
 ## Edit content
 
 - `src/data/profile.js`: name, biography, school, public email, and English project summaries.
-- `profile.honors`: verified honors as `{ year, title, issuer, description, url }`. Currently empty because no awards have been supplied.
+- `profile.honors`: verified honors as `{ year, title, issuer, description, url }`. Year is omitted when it was not supplied. Econlaba is listed as a national finalist of the Alibaba Tmall AI Hackathon, with no date, ranking, or prize.
 - `src/data/github.json`: 11 public original repositories, refreshed on 2026-10-26. Private, forked, archived, and empty repositories are excluded.
 
 Refresh public data with:

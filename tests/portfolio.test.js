@@ -30,12 +30,25 @@ test("Portfolio uses public projects and the supplied profile", () => {
         project.html_url.startsWith("https://github.com/ho2006/"),
     ),
   );
-  assert.deepEqual(profile.honors, []);
+  assert.deepEqual(profile.honors, [
+    {
+      title: "Econlaba — National Finalist",
+      issuer: "Alibaba Tmall AI Hackathon",
+      description:
+        "A multi-agent consumer behavior simulation system selected for the national finals.",
+    },
+  ]);
+  assert.ok(profile.honors.every((honor) => honor.year == null));
   assert.ok(
     [
       profile.role,
       profile.education,
       profile.intro,
+      ...profile.honors.flatMap(({ title, issuer, description }) => [
+        title,
+        issuer,
+        description,
+      ]),
       ...projects.flatMap(({ title, category, description }) => [
         title,
         category,
