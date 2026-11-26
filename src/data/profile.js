@@ -8,7 +8,14 @@ export const profile = {
   avatar: "https://avatars.githubusercontent.com/u/195607975?v=4",
   intro:
     "I turn curiosity into useful software, drawing inspiration from code and everyday life. My projects explore AI conversations, desktop tools, and data research.",
-  honors: [],
+  honors: [
+    {
+      title: "Econlaba — National Finalist",
+      issuer: "Alibaba Tmall AI Hackathon",
+      description:
+        "A multi-agent consumer behavior simulation system selected for the national finals.",
+    },
+  ],
 };
 
 export const projectDetails = {

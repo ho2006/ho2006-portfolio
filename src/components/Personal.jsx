@@ -21,8 +21,8 @@ export function Honors() {
   return (
     <div className="honors-list">
       {profile.honors.map((honor) => (
-        <article key={`${honor.year}-${honor.title}`}>
-          <span>{honor.year}</span>
+        <article key={`${honor.title}-${honor.issuer}`}>
+          {honor.year && <span>{honor.year}</span>}
           <div>
             <h3>{honor.title}</h3>
             <p>{honor.issuer}</p>
